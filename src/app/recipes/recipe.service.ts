@@ -6,21 +6,22 @@ import {Subject} from 'rxjs';
 
 @Injectable()
 export class RecipeService{
-    recipeSelected=new Subject<Recipe>();
-    private recipes:Recipe[]=[
-        new Recipe('Bhagyashree','This is a test',
-        'https://picturetherecipe.com/wp-content/uploads/2020/04/Vanilla-Cardamom-Kulfi-PTR-Featured-395x500.jpg',
-        [
-            new Ingredient('Meat','1'),
-            new Ingredient('Burger','10'),
-        ]),
-        new Recipe('Bhagyashree Sail','This is a test',
-        'https://picturetherecipe.com/wp-content/uploads/2020/04/Vanilla-Cardamom-Kulfi-PTR-Featured-395x500.jpg',
-        [
-            new Ingredient('Buns','2'),
-            new Ingredient("Meat",'6')
-        ])
-      ];
+    recipeChanged= new Subject<Recipe[]>();
+    // private recipes:Recipe[]=[
+    //     new Recipe('Bhagyashree','This is a test',
+    //     'https://picturetherecipe.com/wp-content/uploads/2020/04/Vanilla-Cardamom-Kulfi-PTR-Featured-395x500.jpg',
+    //     [
+    //         new Ingredient('Meat','1'),
+    //         new Ingredient('Burger','10'),
+    //     ]),
+    //     new Recipe('Bhagyashree Sail','This is a test',
+    //     'https://picturetherecipe.com/wp-content/uploads/2020/04/Vanilla-Cardamom-Kulfi-PTR-Featured-395x500.jpg',
+    //     [
+    //         new Ingredient('Buns','2'),
+    //         new Ingredient("Meat",'6')
+    //     ])
+    //   ];
+    private recipes:Recipe[]=[];
       constructor(private slService:ShoppingListService){
 
       }
@@ -34,5 +35,25 @@ export class RecipeService{
     }
     addingIngredienttoRecipeList(ingredients:Ingredient[]){
         this.slService.addIngredients(ingredients);
+    }
+
+    addRecipe(recipe:Recipe){
+        this.recipes.push(recipe); 
+        this.recipeChanged.next(this.recipes.slice());
+    }
+    updateRecipe(index:number,newRecipe:Recipe){
+        this.recipes[index]=newRecipe;
+        this.recipeChanged.next(this.recipes.slice());
+    }
+
+    deleteRecipe(index:number){
+        this.recipes.splice(index,1);
+        this.recipeChanged.next(this.recipes.slice());
+    }
+
+    setRecipes(recipes:Recipe[]){
+        this.recipes=recipes;
+        this.recipeChanged.next(this.recipes.slice());
+
     }
 }

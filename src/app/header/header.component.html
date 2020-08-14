@@ -5,15 +5,15 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul style="display: inline-block;" class="nav navbar-nav">
-                <li><a href="#" (click)="onSelect('recipe')">Recipe</a></li>
-                <li><a href="#" (click)="onSelect('shopping-list')"> Shopping</a></li>
+                <li routerLinkActive="active"><a routerLink='/recipes'>Recipes</a></li>
+                <li routerLinkActive="active"><a routerLink='/shopping-list'> Shopping</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" role="button">Manage</a>
+            <li class="dropdown" appDropdown>
+                <a style="cursor:pointer;" class="dropdown-toggle" role="button">Manage</a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">Save Data</a></li>
-                    <li><a href="#">Fetch</a></li>
+                    <li><a style="cursor: pointer;">Save Data</a></li>
+                    <li><a style="cursor: pointer;">Fetch</a></li>
                 </ul>
             </li>
             </ul>

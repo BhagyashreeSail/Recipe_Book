@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule} from '@angular/common/http'
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +19,13 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
 import { RecipeService } from './recipes/recipe.service';
 import {DataStorageService} from './shared/data-storage.service';
 import { RecipesResolverService} from './recipes/recipes-resolver.service';
+import { AuthComponent } from './auth/auth.component';
+import {AuthService} from './auth/auth.service';
+import { LoadingSpinnerComponent } from './shared/laoding-spinner/loading-spinner.component';
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
+import { AuthGuard } from './auth/auth.guard';
+import { AlertComponent } from './alert/alert.component';
+import { PlaceHolderDirective } from './shared/placeholder/placeholder.directive'
 
 @NgModule({
   declarations: [
@@ -32,7 +39,11 @@ import { RecipesResolverService} from './recipes/recipes-resolver.service';
     RecipeItemComponent,
     DropdownDirective,
     RecipeStartComponent,
-    RecipeEditComponent
+    RecipeEditComponent,
+    AuthComponent,
+    LoadingSpinnerComponent,
+    AlertComponent,
+    PlaceHolderDirective
   ],
   imports: [
     BrowserModule,
@@ -41,7 +52,17 @@ import { RecipesResolverService} from './recipes/recipes-resolver.service';
     HttpClientModule,
     FormsModule
   ],
-  providers: [ShoppingListService,RecipeService,DataStorageService,RecipesResolverService],
-  bootstrap: [AppComponent]
+  providers: [ShoppingListService,
+    RecipeService,
+    DataStorageService,
+    RecipesResolverService,
+    AuthService,
+    AuthInterceptorService,
+    AuthGuard,
+    {provide:HTTP_INTERCEPTORS, useClass:AuthInterceptorService, multi:true}],
+  bootstrap: [AppComponent],
+  entryComponents:[
+    AlertComponent
+  ]
 })
 export class AppModule { }

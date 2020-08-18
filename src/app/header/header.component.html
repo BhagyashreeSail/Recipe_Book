@@ -5,17 +5,21 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul style="display: inline-block;" class="nav navbar-nav">
-                <li routerLinkActive="active"><a routerLink='/recipes'>Recipes</a></li>
-                <li routerLinkActive="active"><a routerLink='/shopping-list'> Shopping</a></li>
+                <li routerLinkActive="active"><a routerLink='/recipes' *ngIf="isAuthenticated">Recipes</a></li>
+                <li routerLinkActive="active"><a routerLink='/auth' *ngIf="!isAuthenticated"> Authenticate</a></li>
+                <li routerLinkActive="active"><a routerLink='/shopping-list' > Shopping</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown" appDropdown>
-                <a style="cursor:pointer;" class="dropdown-toggle" role="button">Manage</a>
-                <ul class="dropdown-menu">
-                    <li><a style="cursor: pointer;" (click)="onSaveData()">Save Data</a></li>
-                    <li><a style="cursor: pointer;" (click)="onFetchData()">Fetch</a></li>
-                </ul>
-            </li>
+            <ul class="nav navbar-nav navbar-right" style="display: inline-block;">
+                <li *ngIf="isAuthenticated">
+                    <a style="cursor:pointer;" (click)="onLogout()">Logout</a>
+                </li>
+                <li class="dropdown" appDropdown *ngIf="isAuthenticated">
+                    <a style="cursor:pointer;" class="dropdown-toggle" role="button">Manage</a>
+                    <ul class="dropdown-menu">
+                        <li><a style="cursor: pointer;" (click)="onSaveData()">Save Data</a></li>
+                        <li><a style="cursor: pointer;" (click)="onFetchData()">Fetch</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
